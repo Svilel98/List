@@ -1,14 +1,27 @@
-package pro.sky.skyproemoloyeelist;
+package pro.sky.skyproemoloyeelist.model;
 
 import java.util.Objects;
 
 public class Employee {
     private String name;
     private String lastname;
+    private int department;
+    private int salary;
 
     public Employee(String name, String lastname) {
         this.name = name;
         this.lastname = lastname;
+    }
+
+    public Employee(String name, String lastname, int department, int salary) {
+        this.name = name;
+        this.lastname = lastname;
+        this.department = department;
+        this.salary = salary;
+    }
+
+    public String getFullName() {
+        return name + " " + lastname;
     }
 
     public String getName() {
@@ -17,6 +30,14 @@ public class Employee {
 
     public String getLastname() {
         return lastname;
+    }
+
+    public int getDepartment() {
+        return department;
+    }
+
+    public int getSalary() {
+        return salary;
     }
 
     @Override

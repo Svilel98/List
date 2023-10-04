@@ -1,74 +1,87 @@
 package pro.sky.skyproemoloyeelist.service;
 
 import org.springframework.stereotype.Service;
-import pro.sky.skyproemoloyeelist.Employee;
+import pro.sky.skyproemoloyeelist.model.Employee;
 import pro.sky.skyproemoloyeelist.EmployeeService;
-import pro.sky.skyproemoloyeelist.exception.EmployeeAlreadyAddedException;
-import pro.sky.skyproemoloyeelist.exception.EmployeeNotFoundException;
-import pro.sky.skyproemoloyeelist.exception.EmployeeStorageIsFullException;
 
-import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    private List<Employee> collectionEmployee;
-    private final int maxEmployees = 15;
+    private final Map<String, Employee> employees = new HashMap<>();
+    private int sizeEmployee = 20;
 
-    public EmployeeServiceImpl(List<Employee> collectionEmployee) {
-        this.collectionEmployee = collectionEmployee;
+    @Override
+    public Employee addEmployee(Employee employee) {
+
+        if (sizeEmployee == employees.size()) {
+            throw new RuntimeException("Overflow");
+        }
+        employees.put(employee.getFullName(), employee);
+        sizeEmployee++;
+        return employee;
     }
 
     @Override
-    public Employee addEmployee(String name, String lastname) {
-        Employee newEmployee = new Employee(name, lastname);
-        boolean foundEmployee = isFoundEmployee(newEmployee);
-        if (foundEmployee) {
-            throw new EmployeeAlreadyAddedException("Такой сотрудник есть в компании");
-        }
-        if (collectionEmployee.size() < maxEmployees) {
-            collectionEmployee.add(newEmployee);
+    public Employee removeEmployee(Employee employee) {
+        Employee employeeDeleted = employees.remove(employee.getFullName());
+        if (employeeDeleted != null) {
+            sizeEmployee--;
+            System.out.println("Удалил");
         } else {
-            throw new EmployeeStorageIsFullException("Превышен лимит количества сотрудников в фирме");
+            throw new RuntimeException("Нет такого");
         }
-        return newEmployee;
+        return employeeDeleted;
     }
 
     @Override
-    public Employee removeEmployee(String name, String lastname) {
-        Employee newEmployee = new Employee(name, lastname);
-        boolean foundEmployee = isFoundEmployee(newEmployee);
-        if (!foundEmployee) {
-            throw new EmployeeNotFoundException("Сотрудник не найден");
-        }
-        collectionEmployee.remove(newEmployee);
-        return newEmployee;
+    public Employee findEmployee(String fullname) {
+        return employees.get(fullname);
     }
 
     @Override
-    public Employee findEmployee(String name, String lastname) {
-        Employee newEmployee = new Employee(name, lastname);
-        boolean foundEmployee = isFoundEmployee(newEmployee);
-        if (!foundEmployee) {
-            throw new EmployeeNotFoundException("Сотрудник не найден");
-        }
-        return newEmployee;
-    }
-
-    private boolean isFoundEmployee(Employee newEmployee) {
-        boolean foundEmployee = false;
-        for (int i = 0; i < collectionEmployee.size(); i++) {
-            if (newEmployee.equals(collectionEmployee.get(i))) {
-                System.out.println("Нашел");
-                foundEmployee = true;
-            }
-        }
-        return foundEmployee;
+    public Map<String, Employee> getMap() {
+        return employees;
     }
 
     @Override
-    public List<Employee> getList() {
-        return collectionEmployee;
+    public Employee getMinimumSalaryInDepartment(int department) {
+        List<Employee> departmentEmployees = employees.values().stream()
+                .filter(employee -> employee.getDepartment() == department)
+                .sorted(Comparator.comparing(Employee::getSalary)).collect(toList());
+        Employee minSalariesEmployee = departmentEmployees.stream()
+                .findFirst().orElseThrow();
+        return minSalariesEmployee;
     }
+
+    @Override
+    public Employee getMaxSalaryInDepartment(int department) {
+        List<Employee> departmentEmployees = employees.values().stream()
+                .filter(employee -> employee.getDepartment() == department)
+                .sorted(Comparator.comparing(Employee::getSalary)).collect(toList());
+        Employee maxSalariesEmployee = departmentEmployees.stream()
+                .reduce((e1, e2) -> e2)
+                .orElseThrow();
+        return maxSalariesEmployee;
+    }
+
+    @Override
+    public List<Employee> getEmployeeFromDepartment(Integer department) {
+        if (department == null) {
+            List<Employee> departmentEmployees = employees.values().stream()
+                    .sorted(Comparator.comparing(Employee::getDepartment)).collect(toList());
+            return departmentEmployees;
+        }
+        List<Employee> employeesByDepartment = employees.values().stream()
+                .filter(employee -> employee.getDepartment() == department).collect(toList());
+        return employeesByDepartment;
+    }
+
 }
+
 
