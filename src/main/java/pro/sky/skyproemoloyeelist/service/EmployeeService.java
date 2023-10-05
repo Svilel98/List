@@ -1,8 +1,7 @@
 package pro.sky.skyproemoloyeelist;
 
-import pro.sky.skyproemoloyeelist.model.Employee;
+import pro.sky.skyproemoloyeelist.service.model.Employee;
 
-import java.util.List;
 import java.util.Map;
 
 public interface EmployeeService{
@@ -12,7 +11,4 @@ public interface EmployeeService{
     Employee findEmployee(String fullname);
 
     Map<String ,Employee> getMap();
-    Employee getMinimumSalaryInDepartment(int department);
-    Employee getMaxSalaryInDepartment(int department);
-    List<Employee> getEmployeeFromDepartment(Integer department);
 }

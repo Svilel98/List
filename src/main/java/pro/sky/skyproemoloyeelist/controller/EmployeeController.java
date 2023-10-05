@@ -4,11 +4,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pro.sky.skyproemoloyeelist.EmployeeService;
-import pro.sky.skyproemoloyeelist.model.Employee;
+import pro.sky.skyproemoloyeelist.service.model.Employee;
 import pro.sky.skyproemoloyeelist.service.EmployeeServiceImpl;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -39,20 +37,5 @@ public class EmployeeController {
     @GetMapping
     public Map<String, Employee> getMap() {
         return employeeService.getMap();
-    }
-
-    @GetMapping(path = "/min-salary")
-    public Employee getMinimumSalaryInDepartment(@RequestParam("department") int department) {
-        return employeeService.getMinimumSalaryInDepartment(department);
-    }
-
-    @GetMapping(path = "/max-salary")
-    public Employee getMaxSalaryInDepartment(@RequestParam("department") int department) {
-        return employeeService.getMaxSalaryInDepartment(department);
-    }
-
-    @GetMapping(path = "/all")
-    public List<Employee> getEmployeeFromDepartment(@RequestParam(value = "department", required = false) Integer department) {
-        return employeeService.getEmployeeFromDepartment(department);
     }
 }

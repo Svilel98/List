@@ -1,4 +1,4 @@
-package pro.sky.skyproemoloyeelist.model;
+package pro.sky.skyproemoloyeelist.service.model;
 
 import java.util.Objects;
 
