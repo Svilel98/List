@@ -1,5 +1,7 @@
 package pro.sky.skyproemoloyeelist.service.model;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
 
 public class Employee {
@@ -38,6 +40,14 @@ public class Employee {
 
     public int getSalary() {
         return salary;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     @Override
