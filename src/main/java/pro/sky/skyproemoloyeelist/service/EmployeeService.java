@@ -8,7 +8,7 @@ public interface EmployeeService{
     Employee addEmployee(Employee employee);
     Employee removeEmployee(Employee employee);
 
-    Employee findEmployee(String fullname) ;
+    Employee findEmployee(String fullname);
 
     Map<String ,Employee> getMap();
 }
