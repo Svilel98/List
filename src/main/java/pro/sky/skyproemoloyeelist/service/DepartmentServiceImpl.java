@@ -45,4 +45,27 @@ public class DepartmentServiceImpl implements DepartmentService {
         return employeeService.getMap().values().stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment));
     }
+
+    @Override
+    public Integer sumSalaryInDepartment(int department) {
+        return employeeService.getMap().values().stream()
+                .filter(e -> e.getDepartment() == department)
+//                .map(Employee :: getSalary)
+                .mapToInt(Employee::getSalary).sum();
+//                .reduce(0, Integer::sum);
+    }
+    @Override
+    public Integer maxSalaryInDepartment(int department) {
+        return employeeService.getMap().values().stream()
+                .filter(e -> e.getDepartment() == department)
+                .mapToInt(Employee::getSalary).max()
+                .orElse(0);
+    }
+    @Override
+    public Integer minSalaryInDepartment(int department) {
+        return employeeService.getMap().values().stream()
+                .filter(e -> e.getDepartment() == department)
+                .mapToInt(Employee::getSalary).min()
+                .orElse(0);
+    }
 }
