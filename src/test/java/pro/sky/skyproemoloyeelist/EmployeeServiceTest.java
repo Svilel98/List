@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.matchers.Null;
 import org.springframework.boot.test.context.SpringBootTest;
+import pro.sky.skyproemoloyeelist.exception.EmployeeNotFoundException;
 import pro.sky.skyproemoloyeelist.service.EmployeeServiceImpl;
 import pro.sky.skyproemoloyeelist.service.model.Employee;
 
@@ -53,7 +54,7 @@ public class EmployeeServiceTest {
         employeeService.addEmployee(employee1);
         Employee deletedEmployee = employeeService.removeEmployee(employee1);
         Assertions.assertEquals(employee1, deletedEmployee);
-        Assertions.assertThrows(NullPointerException.class, () -> employeeService.removeEmployee(employee1));
+        Assertions.assertThrows(EmployeeNotFoundException.class, () -> employeeService.removeEmployee(employee1));
         Assertions.assertThrows(NullPointerException.class, () -> employeeService.removeEmployee(emptyEmployee));
     }
 

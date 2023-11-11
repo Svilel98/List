@@ -43,7 +43,7 @@ public class Constants {
             employee4.getFullName(), employee4
     );
     public static final Map<Integer, List<Employee>> All_EMPLOYEE_MAP = Map.of(
-            department, new ArrayList<>(List.of(employee1, employee2)),
+            department, new ArrayList<>(List.of(employee2, employee1)),
             department3, new ArrayList<>(List.of(employee3, employee4)));
 }
 

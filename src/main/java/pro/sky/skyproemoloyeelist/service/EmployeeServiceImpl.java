@@ -2,6 +2,7 @@ package pro.sky.skyproemoloyeelist.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import pro.sky.skyproemoloyeelist.exception.EmployeeNotFoundException;
 import pro.sky.skyproemoloyeelist.service.model.Employee;
 import pro.sky.skyproemoloyeelist.EmployeeService;
 
@@ -50,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             sizeEmployee--;
             System.out.println("Удалил");
         } else {
-            throw new RuntimeException("Нет такого");
+            throw new EmployeeNotFoundException("Нет такого");
         }
         return employeeDeleted;
     }
