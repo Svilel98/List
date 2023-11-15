@@ -33,7 +33,7 @@ public class Constants {
     public static Employee employee3 = new Employee(name3, lastname3, department3, salary3);
     public static Employee employee4 = new Employee(name4, lastname4, department4, salary4);
     public static Employee emptyEmployee = null;
-    public static final String GOOD_PREFIX = "Tea";
+    public static final String GOOD_PREFIX = "Tesd";
     public static final String BAD_PREFIX = "ABC";
 
     public static final Map<String, Employee> EMPLOYEE_MAP = Map.of(
